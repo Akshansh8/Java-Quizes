@@ -1,0 +1,265 @@
+public class Main
+{
+    public static void main (String[]args)
+    {
+        byte b = 1; // line 1
+        b += 2;   //line 2
+        System.out.print(b+” ”);  //line 3
+        b = b + 3;   // line 4
+        System.out.print(b); // line 5
+    }
+}
+
+Ans The compilation fails at line 4 because of the following reason:
+
+In Java, when performing arithmetic operations on primitive data types, the result is automatically promoted to an int if the operands are smaller than int. In this case, b is a byte, and when you try to perform the operation b + 3 on line 4, the result is of type int.
+
+Here's the relevant part of the code:
+b = b + 3;   // line 4
+
+Since the result of b + 3 is of type int, you cannot directly assign it back to a byte variable (b). To fix this, you need to explicitly cast the result back to a byte:
+
+b = (byte) (b + 3);   // line 4
+This explicit casting tells the compiler that you are aware of the potential loss of information (since an int can hold larger values than a byte), and you are intentionally casting it back to a byte.
+
+Q.2 class StringDemo
+{
+    public static void main(String[] args) 
+    {
+        // Line 1
+        String s1 = new String("This is prepinsta Material");
+        // Line 2
+        String s2 = new String("This is prepinsta Material");
+        
+        // Line 3
+        System.out.println(s1 == s2); 
+        // Output: false (because new objects are created with 'new' keyword)
+
+        // Line 4
+        String s3 = "This is prepinsta Material";
+        // Line 5
+        System.out.println(s1 == s3);
+        // Output: false (one object is created using 'new', the other using string literal)
+
+        // Line 6
+        String s4 = "This is prepinsta Material";
+        // Line 7
+        System.out.println(s3 == s4);
+        // Output: true (both reference the same string literal in the string pool)
+
+        // Line 8
+        String s5 = "This is ";
+        // Line 9
+        String s6 = s5 + "prepinsta Material";
+        // Line 10
+        System.out.println(s3 == s6);
+        // Output: false (concatenation creates a new string object)
+
+        // Line 11
+        final String s7 = "This is ";
+        // Line 12
+        String s8 = s7 + "prepinsta Material";
+        // Line 13
+        System.out.println(s3 == s8);
+        // Output: true (s7 is a final variable, so it is treated as a compile-time constant)
+
+        // Line 14
+        System.out.println(s5 == s7);
+        // Output: true (both reference the same string literal in the string pool)
+    }
+}
+
+Ans Lines 1-2: Two new String objects (s1 and s2) are created with the new keyword, so they refer to different objects even though their contents are the same.
+Line 3: Compares references of s1 and s2, so it prints false.
+Line 4: s3 is assigned a string literal, and s1 and s3 are compared, so it prints false.
+Line 6: Both s3 and s4 reference the same string literal in the string pool, so it prints true.
+Line 9: s5 is assigned a string literal.
+Line 10: s6 is created by concatenating s5 and "prepinsta Material," resulting in a new object. Hence, it prints false.
+Line 11: s7 is assigned a string literal with the final keyword, making it a compile-time constant.
+Line 12: s8 is created by concatenating s7 and "prepinsta Material," resulting in a new object. Hence, it prints true.
+Line 14: s5 and s7 reference the same string literal in the string pool, so it prints true.
+
+Q.3  public class Main
+{
+    public static void main (String args[])
+    {
+        int x = 0;
+        if (x)
+        {
+	        System.out.println ("if");
+        }
+        else
+        {
+	        System.out.println ("else");
+        }
+    }
+}
+
+Ans If we provide any other type than boolean we will get an error
+-----------------------------------------------------------------------------------------------------------------------------------------
+Q.4 class Parent {
+    public void display() {
+        System.out.println("Parent");
+    }
+}
+
+class Child extends Parent {    
+    public void display() {
+        System.out.println("Child");
+    }
+}
+
+class Main {
+    public static void doDisplay(Parent p) {
+        p.display();
+    }
+
+    public static void main(String[] args) {
+        Parent a = new Parent();
+        Parent b = new Child();
+        Child c = new Child();
+        doDisplay(a);
+        doDisplay(b);
+        doDisplay(c);
+    }
+}
+Ans Object Creation:
+
+Parent a = new Parent();: Creates an instance of Parent and assigns it to variable a.
+Parent b = new Child();: Creates an instance of Child and assigns it to variable b. Although the reference is of type Parent, it refers to an actual Child object due to polymorphism.
+Child c = new Child();: Creates an instance of Child and assigns it to variable c.
+Method Invocation:
+
+doDisplay(a);: Calls doDisplay with the Parent reference a. Inside doDisplay, the display() method of Parent is invoked, so "Parent" is printed.
+doDisplay(b);: Calls doDisplay with the Parent reference b. Even though the reference is of type Parent, polymorphism ensures that the overridden display() method in Child is called, so "Child" is printed.
+doDisplay(c);: Calls doDisplay with the Child reference c. The display() method in Child is invoked, printing "Child."
+Output:
+
+Parent
+Child
+Child
+
+------------------------------------------------------------------------------------------------------------------------------------------
+Q.5 public class Main  
+{
+    static final int i;
+    Main(){
+        i=100;
+    }
+    public static void main(String[] args)
+    {
+        Main m=new Main();
+        System.out.println(m.i);
+    }
+}
+Compilation
+ChatGPT
+The provided Java code will result in a compilation error. This is because the final keyword is used with the variable i, which means it must be initialized exactly once. In the code, you have declared i as a static final int without initializing it at the point of declaration.
+
+However, in the constructor Main(), you attempt to assign a value to i:
+
+java
+Copy code
+Main(){
+    i=100;
+}
+Since i is declared as final, it must be initialized either at the time of declaration or in a static block. Here's an example of how you can fix the code:
+
+java
+Copy code
+public class Main {
+    static final int i;
+
+    static {
+        i = 100;
+    }
+
+    public static void main(String[] args) {
+        Main m = new Main();
+        System.out.println(m.i);
+    }
+}
+Ans. In this corrected code, the value of i is assigned within a static block, ensuring it is initialized before any instance of the class is created.
+
+Thumb of rule
+We can't initialsie a static final variable anywhere except at declaration or inside a constructor;
+Static variable: When the value of a variable is not varied, then it is a not good choice to go for instance variable. At that time we can add static modifier to that variable. Whenever we declare variable as static, then at the class level a single variable is created which is shared with the objects. Any change in that static variable reflect to the other objects operations. If we won’t initialize a static variable, then by default JVM will provide a default value for static variable.
+But when we declare a static variable with final modifier then we should take care of the following conventions:
+
+Declaring variables only as static can lead to change in their values by one or more instances of a class in which it is declared.
+Declaring them as static final will help you to create a CONSTANT. Only one copy of variable exists which can’t be reinitialize.
+
+kyunki static final int static bhi or final bhi hai usko ya to declaration k time ya fir static block me class load hone se pehle initalize karna padeega nai to compile time error dega;
+
+agar final int i;
+hai to usko khali declaration k time ya fir constructor me hi initalsie kr  sakte hai jabki
+
+//ye important topic hai
+java
+Copy code
+s = s.substring(0, 2) + s.substring(4, 6);
+may seem like you are modifying the existing string s, but what's happening behind the scenes is that a new string is being created, and the reference s is then updated to point to this new string. The original string "abcdefgh" remains unchanged.
+
+Here's a more detailed breakdown:
+
+s.substring(0, 2) creates a new string "ab" by extracting characters at indices 0 and 1 from the original string "abcdefgh".
+s.substring(4, 6) creates another new string "ef" by extracting characters at indices 4 and 5 from the original string "abcdefgh".
+The + operator concatenates these two substrings, resulting in a new string "abef".
+The reference s is then updated to point to this new string "abef".
+So, while it may seem like you are modifying the existing string, you are actually creating a new string and updating the reference to point to that new string. The original string "abcdefgh" remains unchanged in memory.
+
+------------------------------------------------------------------------------------------------------------------------------------------class Sample
+{
+    protected static void display()
+    {
+        System.out.println("Parent class");
+    }
+}
+public class Main extends Sample 
+{
+    protected static void display()
+    {
+        System.out.println("Child class");
+    }
+    
+    public static void main(String[] args)throws InterruptedException
+    {
+	  Sample obj=new Main();
+	  obj.display();
+    }
+}
+Compile time error
+
+No output
+
+Child class
+
+Parent class
+
+Explanation
+If two methods with static keywords and with the same name and same argument type are present inside parent and child class , then it is called method hiding. In method hiding the method resolution is based on reference type.So parent class display method gets executed .Hence the output is “Parent class”.
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+class Parent 
+{
+     int x=10;
+}
+class Child extends Parent
+{
+     int x=20;
+}
+class Test
+{
+	public static void main(String[] args)
+	{
+		Parent p=new Parent();
+		System.out.print(p.x+” ”);
+		Child c=new Child();
+		System.out.print(c.x+” ”);
+		Parent p1=new Child();
+		System.out.print(p1.x);
+	}
+}
+
+variables are resolved on the basis of reference type
