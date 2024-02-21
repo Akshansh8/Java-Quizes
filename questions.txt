@@ -332,3 +332,32 @@ the following order is followed
 1. Identification of static members from top to bottom
 2. execution of static variable assignment and static block from top to bottoom
 3. instance block then constructor
+-----------------------------------------------------------------------------------------------------------------------------
+
+public class Main 
+{
+    public static void main (String args[])
+    {
+       if(true)
+            int x=10;
+    }
+}
+
+although else and curly braces is optional but without curly braces we can take only one statement inside if and it should not be a declarative statement.
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+class Test
+{
+  	public static void main(String[] args)
+  	{
+              	int x;
+              	if(args.length>0)
+              	{
+                          	x=10;
+              	}
+              	System.out.println(x);
+  	}
+}
+
+It is not recomended to initalize local variables inside logical blocks because there is no gurantee that this will get executed and hence will show a compile time error
