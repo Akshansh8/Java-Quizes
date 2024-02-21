@@ -263,3 +263,72 @@ class Test
 }
 
 variables are resolved on the basis of reference type
+---------------------------------------------------------------------------------------------------------------------------------------
+class Main
+{
+	public void func(String s)
+	{
+		System.out.print("String ");
+	}
+	public void func(Object o)		   
+	{
+		System.out.print("Object ");
+	}
+	public static void main(String[] args)
+	{
+		Main obj=new Main();
+		obj.func(new Object());
+		obj.func("Prepinsta");
+		obj.func(null);
+	}
+}
+
+Ans-> Child class will get higher priority than parent class
+
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+public class Main  
+{
+    static final int i;
+    Main(){
+        i=100;
+    }
+    public static void main(String[] args)
+    {
+        Main m=new Main();
+        System.out.println(m.i);
+    }
+}
+
+Ans -> for static variables initialization should be done at the time of classloading either in static block or during declaration
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+public class Main 
+{
+	private static String func(String str)
+	{
+		System.out.print(str+" ");
+		return str;
+	}
+	static String m=func("1");
+	{
+		m=func("2");
+	}
+	static
+	{
+		m=func("3");
+	}
+	public static void main(String[] args)
+	{
+		Object obj=new Main();
+	}
+}
+
+
+output 1 3 2
+the following order is followed 
+1. Identification of static members from top to bottom
+2. execution of static variable assignment and static block from top to bottoom
+3. instance block then constructor
